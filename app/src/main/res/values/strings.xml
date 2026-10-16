@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cast</string>
+    <string name="no_connection">Нет подключения, повтор…</string>
+    <string name="webview_outdated">WebView на этой панели устарел.\nОбновите «Android System WebView».</string>
+    <string name="press_back_again">Нажмите «Назад» ещё раз, чтобы выйти</string>
+    <string name="autostart_title">Автозапуск</string>
+    <string name="autostart_message">Чтобы Cast сам открывался после включения панели, разрешите ему «Показ поверх других приложений».</string>
+    <string name="autostart_allow">Разрешить</string>
+    <string name="autostart_skip">Не сейчас</string>
+    <string name="autostart_unavailable">На этой панели нельзя выдать разрешение — автозапуск может не работать</string>
+</resources>
