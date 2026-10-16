@@ -39,7 +39,9 @@ adb logcat -d | grep -q "WebView renderer gone" || fail "onRenderProcessGone was
 shot 2-after-renderer-kill
 
 echo "== Java crash"
-adb shell am crash "$PKG"
+# By PID: "am crash <package>" may hit the WebView renderer, which also runs under our package.
+main_pid=$(adb shell pidof "$PKG" | tr -d '\r')
+adb shell am crash "$main_pid"
 sleep 5
 if alive; then fail "am crash did not crash the app"; fi
 adb shell am start -W -n "$PKG/.MainActivity"
