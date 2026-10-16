@@ -47,7 +47,7 @@ class MainActivity : Activity() {
     }
 
     private lateinit var webView: WebView
-    private lateinit var overlay: TextView
+    private lateinit var messageView: TextView
     private val handler = Handler(Looper.getMainLooper())
     private val retry = Runnable { load() }
     private var loadFailed = false
@@ -67,7 +67,7 @@ class MainActivity : Activity() {
         }
 
         webView = WebView(this)
-        overlay = TextView(this).apply {
+        messageView = TextView(this).apply {
             setBackgroundColor(BACKGROUND)
             setTextColor(Color.rgb(0xF2, 0xF4, 0xF8))
             textSize = 28f
@@ -78,7 +78,7 @@ class MainActivity : Activity() {
         setContentView(FrameLayout(this).apply {
             setBackgroundColor(BACKGROUND)
             addView(webView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
-            addView(overlay, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
+            addView(messageView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
         })
 
         setUpWebView()
@@ -113,7 +113,7 @@ class MainActivity : Activity() {
 
             override fun onPageFinished(view: WebView, url: String?) {
                 if (loadFailed) return
-                overlay.visibility = View.GONE
+                messageView.visibility = View.GONE
                 checkWebRtc()
             }
 
@@ -160,8 +160,8 @@ class MainActivity : Activity() {
     }
 
     private fun showMessage(text: String) {
-        overlay.text = text
-        overlay.visibility = View.VISIBLE
+        messageView.text = text
+        messageView.visibility = View.VISIBLE
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
