@@ -274,6 +274,7 @@ class MainActivity : Activity() {
         val button = Button(this).apply {
             text = getString(R.string.crash_continue)
             textSize = 24f
+            isAllCaps = false
             setOnClickListener {
                 CrashReporter.clear(this@MainActivity)
                 root.removeView(crashView)

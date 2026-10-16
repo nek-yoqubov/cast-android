@@ -48,16 +48,17 @@ adb shell am start -W -n "$PKG/.MainActivity"
 sleep 6
 shot 3-crash-report
 dump_ui
-grep -q 'Продолжить' "$OUT/ui.xml" || fail "crash report screen not shown"
+grep -q 'class="android.widget.Button"' "$OUT/ui.xml" || fail "crash report screen not shown"
 grep -q 'Exception' "$OUT/ui.xml" || fail "crash report has no stack trace"
 
-bounds=$(grep -o 'text="Продолжить"[^>]*bounds="\[[0-9]*,[0-9]*\]\[[0-9]*,[0-9]*\]"' "$OUT/ui.xml" | grep -o '\[[0-9,]*\]\[[0-9,]*\]' | tr '[],' '   ')
+bounds=$(grep -o 'text="Продолжить"[^>]*class="android.widget.Button"[^>]*bounds="\[[0-9]*,[0-9]*\]\[[0-9]*,[0-9]*\]"' "$OUT/ui.xml" | grep -o '\[[0-9,]*\]\[[0-9,]*\]' | tr '[],' '   ')
 read -r x1 y1 x2 y2 <<< "$bounds"
+[ -n "${y2:-}" ] || fail "Продолжить button not found"
 adb shell input tap $(( (x1 + x2) / 2 )) $(( (y1 + y2) / 2 ))
 sleep 20
 alive || fail "app died after Продолжить"
 dump_ui
-if grep -q 'Продолжить' "$OUT/ui.xml"; then fail "crash report still shown after Продолжить"; fi
+if grep -q 'class="android.widget.Button"' "$OUT/ui.xml"; then fail "crash report still shown after Продолжить"; fi
 shot 4-after-continue
 
 echo "== restart: no stale report"
@@ -65,7 +66,7 @@ adb shell am force-stop "$PKG"
 adb shell am start -W -n "$PKG/.MainActivity"
 sleep 8
 dump_ui
-if grep -q 'Продолжить' "$OUT/ui.xml"; then fail "an old report was shown again"; fi
+if grep -q 'class="android.widget.Button"' "$OUT/ui.xml"; then fail "an old report was shown again"; fi
 alive || fail "app died after restart"
 
 adb logcat -d > "$OUT/logcat.txt"
