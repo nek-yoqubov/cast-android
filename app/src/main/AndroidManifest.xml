@@ -4,12 +4,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Android 10+ only lets an app open an Activity from the background (autostart) with this. -->
+    <!-- Android 10+ only lets an app open an Activity from the background (autostart) with this.
+         Requested only from the hidden settings on the page; without it there is simply no autostart. -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
     <application
+        android:name=".CastApp"
         android:allowBackup="false"
         android:enableOnBackInvokedCallback="true"
         android:hardwareAccelerated="true"
@@ -30,6 +32,7 @@
             </intent-filter>
         </activity>
 
+        <!-- No services in this app, so no foregroundServiceType is needed (Android 14+). -->
         <receiver
             android:name=".BootReceiver"
             android:exported="true">
